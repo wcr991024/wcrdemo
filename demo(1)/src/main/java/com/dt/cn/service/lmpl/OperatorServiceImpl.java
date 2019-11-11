@@ -20,4 +20,43 @@ public class OperatorServiceImpl implements OperatorService{
 		
 		return operatorMapper.findBusiness();
 
-}}
+}
+
+	@Override
+	public List<Operator> findUser1() {
+		
+		return operatorMapper.findUser1();
+	}
+
+	@Override
+	public List<Operator> findExpence() {
+		
+		return operatorMapper.findExpence();
+	}
+
+	@Override
+	public List<Operator> findRecommend() {
+		
+		return operatorMapper.findRecommend();
+	}
+
+	@Override
+	public List<Operator> findService() {
+		
+		return operatorMapper.findService();
+	}
+
+	@Override
+	public Operator selectByPrimaryKey(String id) {
+		
+		return operatorMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<Operator> selectByName(int pageStart, int pageSize, String username) {
+		
+		return null;
+	}
+	
+
+}

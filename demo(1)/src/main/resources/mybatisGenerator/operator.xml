@@ -4,8 +4,8 @@
 
 	<!-- 引入配置文件 -->
 	<properties resource="init.properties" />
-
 	<context id="dictionaries">
+
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
 			<property name="suppressAllComments" value="true" />
@@ -14,10 +14,8 @@
 		<jdbcConnection connectionURL="${jdbc_url}"
 			driverClass="${jdbc_driver}" password="${jdbc_password}"
 			userId="${jdbc_user}" />
-			<!-- <property name="nullCataLogMeansCurrect" value="true"/>
-			</jdbcConnection>
-			 -->
-			
+		<!-- <property name="nullCataLogMeansCurrect" value="true"/> </jdbcConnection> -->
+
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
@@ -26,9 +24,8 @@
 
 		<!-- 实体类所存放位置 -->
 		<javaModelGenerator
-			targetPackage="com.dt.cn.model.sysUser"
-			targetProject="${project}">
-			
+			targetPackage="com.dt.cn.model.sysUser" targetProject="${project}">
+
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 			<!-- 从数据库返回的值被清理前后的空格(通过trim方法实现) -->
@@ -37,7 +34,7 @@
 
 		<!-- java客户端类对应的xml映射文件存放位置 -->
 		<sqlMapGenerator targetPackage="mybatis.mappers"
-			targetProject="demo/src/main/resources" />
+			targetProject="demo(1)/src/main/resources" />
 
 		<!-- java客户端类接口文件存放位置 -->
 		<javaClientGenerator
@@ -48,9 +45,10 @@
 		</javaClientGenerator>
 
 		<!-- 配置表信息 -->
-		<table tableName="sys_user">
-			
-		</table>
-	
-	</context>
+		
+		<!-- <table tableName="consumer"></table> -->
+	<!-- 	<table tableName="service"></table> -->
+		<table tableName="expence"></table>
+</context>
+
 </generatorConfiguration>

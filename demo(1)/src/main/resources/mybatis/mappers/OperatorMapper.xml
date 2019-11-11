@@ -6,5 +6,28 @@
 	<select id="findBusiness" resultType="com.dt.cn.model.sysUser.Operator">
 		select * from Business_order
 	</select>
+	<select id="findUser1" resultType="com.dt.cn.model.sysUser.Operator">
+		select * from consumer
+	</select>
+	<select id="findService" resultType="com.dt.cn.model.sysUser.Operator">
+		SELECT * FROM service;
+	</select>
+	<select id="findExpence" resultType="com.dt.cn.model.sysUser.Operator">
+	SELECT * FROM expence;
+	</select>
+	<select id="findRecommend" resultType="com.dt.cn.model.sysUser.Operator">
+	SELECT * FROM recommend;
+	</select>
+<!-- 	<select id="selectByPrimaryKey" resultType="com.dt.cn.model.sysUser.Operator">
+		select * from business_order 
+		 
+		 
+		  	where business_no LIKE CONCAT('%',#{business_no},'%');
+		</select>
+		
+	
+	 -->
+	
+	
 	</mapper>
 	
