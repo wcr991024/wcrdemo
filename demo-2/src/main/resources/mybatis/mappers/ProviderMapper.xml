@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.datangedu.cn.dao.mapper.ProviderMapper">
+  <resultMap id="BaseResultMap" type="com.datangedu.cn.model.Provider">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PROVIDER_INFOTOUSER" jdbcType="VARCHAR" property="providerInfotouser" />
+    <result column="PROVIDER_INFOTOROOT" jdbcType="VARCHAR" property="providerInfotoroot" />
+    <result column="CELLPHONE" jdbcType="VARCHAR" property="cellphone" />
+    <result column="CUSTOM_SERVICENUM" jdbcType="VARCHAR" property="customServicenum" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="PROVIDER_IMG" jdbcType="VARCHAR" property="providerImg" />
+    <result column="REGION_ID" jdbcType="VARCHAR" property="regionId" />
+    <result column="REGISTER_TIME" jdbcType="DATE" property="registerTime" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="AUTH_FILE" jdbcType="VARCHAR" property="authFile" />
+    <result column="WEIXIN" jdbcType="VARCHAR" property="weixin" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="WORK_TIME" jdbcType="VARCHAR" property="workTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, PROVIDER_INFOTOUSER, PROVIDER_INFOTOROOT, CELLPHONE, CUSTOM_SERVICENUM, 
+    PASSWORD, PROVIDER_IMG, REGION_ID, REGISTER_TIME, STATUS, AUTH_FILE, WEIXIN, QQ, 
+    WORK_TIME, EMAIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from provider
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from provider
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.datangedu.cn.model.Provider">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into provider (NAME, PROVIDER_INFOTOUSER, PROVIDER_INFOTOROOT, 
+      CELLPHONE, CUSTOM_SERVICENUM, PASSWORD, 
+      PROVIDER_IMG, REGION_ID, REGISTER_TIME, 
+      STATUS, AUTH_FILE, WEIXIN, 
+      QQ, WORK_TIME, EMAIL
+      )
+    values (#{name,jdbcType=VARCHAR}, #{providerInfotouser,jdbcType=VARCHAR}, #{providerInfotoroot,jdbcType=VARCHAR}, 
+      #{cellphone,jdbcType=VARCHAR}, #{customServicenum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{providerImg,jdbcType=VARCHAR}, #{regionId,jdbcType=VARCHAR}, #{registerTime,jdbcType=DATE}, 
+      #{status,jdbcType=INTEGER}, #{authFile,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{workTime,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.datangedu.cn.model.Provider">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="providerInfotouser != null">
+        PROVIDER_INFOTOUSER,
+      </if>
+      <if test="providerInfotoroot != null">
+        PROVIDER_INFOTOROOT,
+      </if>
+      <if test="cellphone != null">
+        CELLPHONE,
+      </if>
+      <if test="customServicenum != null">
+        CUSTOM_SERVICENUM,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="providerImg != null">
+        PROVIDER_IMG,
+      </if>
+      <if test="regionId != null">
+        REGION_ID,
+      </if>
+      <if test="registerTime != null">
+        REGISTER_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="authFile != null">
+        AUTH_FILE,
+      </if>
+      <if test="weixin != null">
+        WEIXIN,
+      </if>
+      <if test="qq != null">
+        QQ,
+      </if>
+      <if test="workTime != null">
+        WORK_TIME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="providerInfotouser != null">
+        #{providerInfotouser,jdbcType=VARCHAR},
+      </if>
+      <if test="providerInfotoroot != null">
+        #{providerInfotoroot,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null">
+        #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="customServicenum != null">
+        #{customServicenum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="providerImg != null">
+        #{providerImg,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="authFile != null">
+        #{authFile,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.datangedu.cn.model.Provider">
+    update provider
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="providerInfotouser != null">
+        PROVIDER_INFOTOUSER = #{providerInfotouser,jdbcType=VARCHAR},
+      </if>
+      <if test="providerInfotoroot != null">
+        PROVIDER_INFOTOROOT = #{providerInfotoroot,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null">
+        CELLPHONE = #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="customServicenum != null">
+        CUSTOM_SERVICENUM = #{customServicenum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="providerImg != null">
+        PROVIDER_IMG = #{providerImg,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        REGION_ID = #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        REGISTER_TIME = #{registerTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="authFile != null">
+        AUTH_FILE = #{authFile,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        WEIXIN = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        WORK_TIME = #{workTime,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.datangedu.cn.model.Provider">
+    update provider
+    set NAME = #{name,jdbcType=VARCHAR},
+      PROVIDER_INFOTOUSER = #{providerInfotouser,jdbcType=VARCHAR},
+      PROVIDER_INFOTOROOT = #{providerInfotoroot,jdbcType=VARCHAR},
+      CELLPHONE = #{cellphone,jdbcType=VARCHAR},
+      CUSTOM_SERVICENUM = #{customServicenum,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      PROVIDER_IMG = #{providerImg,jdbcType=VARCHAR},
+      REGION_ID = #{regionId,jdbcType=VARCHAR},
+      REGISTER_TIME = #{registerTime,jdbcType=DATE},
+      STATUS = #{status,jdbcType=INTEGER},
+      AUTH_FILE = #{authFile,jdbcType=VARCHAR},
+      WEIXIN = #{weixin,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      WORK_TIME = #{workTime,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

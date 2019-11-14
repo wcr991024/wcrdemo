@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinda.mapper.ProductDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.xinda.model.ProductDetail" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="IMG_1" property="img1" jdbcType="VARCHAR" />
+    <result column="IMG_2" property="img2" jdbcType="VARCHAR" />
+    <result column="IMG_3" property="img3" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="SERVICE_DETAIL" property="serviceDetail" jdbcType="VARCHAR" />
+    <result column="COMMON_QUS" property="commonQus" jdbcType="VARCHAR" />
+    <result column="FORM_MODEL" property="formModel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IMG_1, IMG_2, IMG_3, CONTENT, SERVICE_DETAIL, COMMON_QUS, FORM_MODEL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xinda.model.ProductDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_detail
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product_detail
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xinda.model.ProductDetailExample" >
+    delete from product_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xinda.model.ProductDetail" >
+    insert into product_detail (ID, IMG_1, IMG_2, 
+      IMG_3, CONTENT, SERVICE_DETAIL, 
+      COMMON_QUS, FORM_MODEL)
+    values (#{id,jdbcType=VARCHAR}, #{img1,jdbcType=VARCHAR}, #{img2,jdbcType=VARCHAR}, 
+      #{img3,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{serviceDetail,jdbcType=VARCHAR}, 
+      #{commonQus,jdbcType=VARCHAR}, #{formModel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xinda.model.ProductDetail" >
+    insert into product_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="img1 != null" >
+        IMG_1,
+      </if>
+      <if test="img2 != null" >
+        IMG_2,
+      </if>
+      <if test="img3 != null" >
+        IMG_3,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="serviceDetail != null" >
+        SERVICE_DETAIL,
+      </if>
+      <if test="commonQus != null" >
+        COMMON_QUS,
+      </if>
+      <if test="formModel != null" >
+        FORM_MODEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDetail != null" >
+        #{serviceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="commonQus != null" >
+        #{commonQus,jdbcType=VARCHAR},
+      </if>
+      <if test="formModel != null" >
+        #{formModel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xinda.model.ProductDetailExample" resultType="java.lang.Integer" >
+    select count(*) from product_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product_detail
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img1 != null" >
+        IMG_1 = #{record.img1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img2 != null" >
+        IMG_2 = #{record.img2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img3 != null" >
+        IMG_3 = #{record.img3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceDetail != null" >
+        SERVICE_DETAIL = #{record.serviceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonQus != null" >
+        COMMON_QUS = #{record.commonQus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formModel != null" >
+        FORM_MODEL = #{record.formModel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product_detail
+    set ID = #{record.id,jdbcType=VARCHAR},
+      IMG_1 = #{record.img1,jdbcType=VARCHAR},
+      IMG_2 = #{record.img2,jdbcType=VARCHAR},
+      IMG_3 = #{record.img3,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      SERVICE_DETAIL = #{record.serviceDetail,jdbcType=VARCHAR},
+      COMMON_QUS = #{record.commonQus,jdbcType=VARCHAR},
+      FORM_MODEL = #{record.formModel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xinda.model.ProductDetail" >
+    update product_detail
+    <set >
+      <if test="img1 != null" >
+        IMG_1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        IMG_2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        IMG_3 = #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDetail != null" >
+        SERVICE_DETAIL = #{serviceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="commonQus != null" >
+        COMMON_QUS = #{commonQus,jdbcType=VARCHAR},
+      </if>
+      <if test="formModel != null" >
+        FORM_MODEL = #{formModel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xinda.model.ProductDetail" >
+    update product_detail
+    set IMG_1 = #{img1,jdbcType=VARCHAR},
+      IMG_2 = #{img2,jdbcType=VARCHAR},
+      IMG_3 = #{img3,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      SERVICE_DETAIL = #{serviceDetail,jdbcType=VARCHAR},
+      COMMON_QUS = #{commonQus,jdbcType=VARCHAR},
+      FORM_MODEL = #{formModel,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

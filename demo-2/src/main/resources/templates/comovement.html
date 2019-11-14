@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{js/jquery-3.4.1.min.js}" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	$("#province").change(function(){
+		
+		var pr_name=$("#province").val();
+		$('#city').html('<option value="">请选择城市</option>');
+		$.ajax({
+			url:"/findcity?pr_name="+pr_name,
+			type:"GET",
+			dataType:"json",
+		success:function(data){
+			
+			if(data!=null){
+				$(data).each(function(index){
+					//alert("0000000");
+					$("#city").append('<option value="'+data[index].ci_name + '">'+data[index].ci_name+'</option>');
+				
+				});
+			}
+		}
+		});
+	});
+	
+	$("#city").change(function(){
+		//alert("0000000");
+		var ci_name=$('#city option:selected').val();
+		$('#county').html('<option value="">请选择区县</option>');
+		$.ajax({
+			url:"/findcounty?ci_name="+ci_name,
+			type:"get",
+			dataType:"json",
+		success:function(data){
+		
+			if(data!=null){
+				$(data).each(function(index){
+					$('#county').append('<option value="'+data[index].co_name + '">'+data[index].co_name+'</option>');
+				});
+			}
+		}
+		});
+	});
+	
+	
+});
+
+</script>
+</head>
+<body>
+省<select id="province" onchange="">
+   <option value="">---请选择省份---</option>
+   <option th:each="pr:${province}" th:value="${pr.pr_name}" th:text="${pr.pr_name	}"></option>
+</select>
+市<select id="city" onchange="">
+   <option>---请选择城市---</option>
+</select>
+区<select id="county">
+   <option>---请选择区县---</option>
+</select>
+</body>
+</html>
