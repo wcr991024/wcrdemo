@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dt.xd.dao.mapper.ComovementMapper">
+<select id="findProvince" resultType="com.dt.xd.User.Comovement">
+SELECT * FROM province
+</select>
+<select id="findCity" parameterType="String" resultType="com.dt.xd.User.Comovement">
+SELECT  ci_name FROM province,
+city WHERE ci_pr=pr_id AND pr_name=#{pr_name}
+</select>
+<select id="findCounty" parameterType="String" resultType="com.dt.xd.User.Comovement">
+SELECT co_name FROM city,
+county WHERE co_ci=ci_id AND ci_name=#{ci_name}
+</select>
+</mapper>

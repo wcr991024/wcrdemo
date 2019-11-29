@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<link rel="stylesheet" href="./css/public.css">
+<link rel="stylesheet" href="./css/header.css">
+<link rel="stylesheet" href="./css/operator_user.css">
+<link rel="stylesheet" href="./css/font-awesome.min.css">
+<link rel="stylesheet" href="./css/element-ui_2.12.0.css">
+<style>
+ul.pagination {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	width: 50%;
+}
+
+ul.pagination li {
+	display: inline;
+}
+
+ul.pagination li a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+}
+
+ul.pagination li a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50; /*solid	定义实线*/
+}
+
+ul.pagination li a:hover:not (.active ) {
+	background-color: #ddd;
+}
+
+div.nowpage {
+	background-color: #aaaaaa;
+}
+
+div.center {
+	text-align: center;
+}
+</style>
+
+<script src="./js/jquery-3.4.1.min.js"></script>
+<script>
+	
+</script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="logo_info">
+			<img src="./images/logo.png" alt="logo"> <span
+				class="platform_name">信达</span>
+		</div>
+		<ul class="user_info">
+			<li><a href="/product"><i
+					class="fa fa-cog fa-fw"></i>服务管理</a></li>
+			<li><img src="./images/default_user.png"> <span th:text="${session.xdUser.name}"></span>
+				<i class="fa fa-chevron-down fa-fw user-arrow-down"></i>
+				<ul class="dropdown">
+					<a href="operator_login.html"><li>退出登录</li></a>
+				</ul></li>
+		</ul>
+	</div>
+	<div class="main">
+		<ul class="main-nav">
+			<li><a href="/dingdan"> <i class="fa fa-shopping-cart fa-fw"></i>
+					<p>订单</p>
+			</a></li>
+			<li class="bg-red"><a href="/yonghu"> <i
+					class="fa fa-user fa-fw"></i>
+					<p>用户</p>
+			</a></li>
+			<li><a href="/fuwushang"> <i class="fa fa-tasks fa-fw"></i>
+					<p>服务商</p>
+			</a></li>
+			<li><a href="/feiyong"> <i class="fa fa-cny fa-fw"></i>
+					<p>费用中心</p>
+			</a></li>
+			<li><a href="/tuijian"> <i class="fa fa-star fa-fw"></i>
+					<p>优质推荐</p>
+			</a></li>
+		</ul>
+		<div class="main-details">
+			<div class="main-top">
+				<ul>
+					<li><i class="fa fa-home fa-fw"></i></li>
+					<li>用户</li>
+					<li>/</li>
+					<li>注册用户</li>
+				</ul>
+			</div>
+			<ul class="main-tab">
+				<li class="border-red business-order">注册用户</li>
+				  
+		 	</ul>
+			<div class="main-content">
+				<div class="search">
+				<form action="/yonghu">
+					<input  placeholder="请输入用户姓名查询"  name="name"
+						th:value="${name}" id="name"/>
+					<button>
+						<i class="fa fa-search fa-fw"></i>
+					</button></form>
+				</div>
+			</div>
+			<input type="hidden" th:value="${pageCount}" id="pageCount" />
+			 <input type="hidden" th:value="${pageSize}" id="pageSize" />
+			  <input type="hidden" th:value="${pageStart}" id="pageStart" />
+			  <div th:if="${consumerList.size()==0}">
+				<h3 style="margin-left:30px;margin-top:20px">未查询到该用户 . . .</h3>
+			</div>
+			<div th:if="${consumerList.size()!=0}">
+			  
+			<table border="0" cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>用户编号</th>
+						<th>姓名</th>
+						<th>手机号</th>
+						<th>所在地</th>
+						<th>注册时间</th>
+						<th>购买订单数</th>
+						<th>消费金额</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="consumerList:${consumerList}">
+						<td th:text="${consumerList.code}"></td>
+						<td th:text="${consumerList.name}"></td>
+						<td th:text="${consumerList.cellphone}"></td>
+						<td th:text="${consumerList.region}"></td>
+						<td th:text="${consumerList.registerTime}"></td>
+						<td th:text="${consumerList.buyNum}"></td>
+						<td th:text="${consumerList.price}"></td>
+
+						<td><input type="hidden" class="id" th:value="${consumerList.id}"> <span class="handle-btn">查看</span></td>
+					</tr>
+
+				</tbody>
+			</table>
+			<div class="center"
+				th:with="pageNext=${pageStart}+${pageSize},
+	pagePre=${pageStart}-${pageSize},
+	pageL=${pageCount}-(${pageCount}%${pageSize})">
+		<ul class="pagination">
+				<li><span><a th:href="@{'/yonghu?pageStart='+0+'&name='+${name}}">首页</a></span></li>
+				<li><span th:if="${pagePre} ge '0'"><a
+						th:href="@{'/yonghu?pageStart='+${pagePre}+'&name='+${name}}">上页</a></span></li>
+				<li><div id="mydiv"></div></li>
+				<li><span th:if="${pageNext} lt ${pageCount}"><a
+						th:href="@{'/yonghu?pageStart='+${pageNext}+'&name='+${name}}">下页</a></span></li>
+				<li><span><a
+						th:href="@{'/yonghu?pageStart='+${pageL}+'&name='+${name}}">末页</a></span></li>
+</ul>
+<div class="masking">
+        <div class="scroller">
+            <h3>查看</h3>
+            <ul>
+                <li>
+                	<input type="hidden" class="id" >
+                    <span>用户编号</span>
+                    <span class="code" ></span>
+                </li>
+                <li>
+                    <span>姓名</span>
+                   <span class="name"></span>
+                </li>
+                <li>
+                    <span>手机号</span>
+                    <span class="cellphone"></span>
+                </li>
+                <li>
+                    <span>所在地</span>
+                    <span class="region"></span>
+                </li>
+                <li>
+                    <span>注册时间</span>
+                    <span class="registerTime"></span>
+                </li>
+                <li>
+                    <span>购买订单数</span>
+                    <span class="buyNum"></span>
+                </li>
+                <li>
+                    <span>消费金额</span>
+                    <span class="price"></span>
+                </li>
+            </ul>
+            <button class="save-btn">确认</button>
+        </div>
+    </div>
+			</div>
+		</div>
+	</div>
+	<script src="./js/operator_user.js"></script>
+</body>
+
+</html>

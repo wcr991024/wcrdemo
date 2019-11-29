@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dt.xd.dao.mapper.ExpenceMapper">
+	<resultMap id="BaseResultMap"
+		type="model.User.Expence">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="buy_time" jdbcType="DATE" property="buyTime" />
+		<result column="business_no" jdbcType="VARCHAR"
+			property="businessNo" />
+		<result column="price" jdbcType="INTEGER" property="price" />
+		<result column="pay_type" jdbcType="VARCHAR" property="payType" />
+		<result column="order_info" jdbcType="VARCHAR"
+			property="orderInfo" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, name, buy_time, business_no, price, pay_type,
+		order_info
+	</sql>
+	<select id="getCount" parameterType="map"
+		resultType="java.lang.Integer">
+		select count(*) from expence
+		<where>
+		<if test="name!=null and name!=''">
+			AND name like concat('%',#{name},'%')
+		</if>
+		<if test="time >=0">
+		AND date_sub(curdate(), interval #{time} day) <![CDATA[ <= ]]> date(buy_time)
+		</if>
+		</where>
+	</select>
+	<select id="selectByExample"
+		parameterType="model.User.ExpenceExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from expence
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="name!=null and name!=''">
+			where name like concat('%',#{name},'%')
+		</if>
+		<if test="pageStart>=0">
+			limit ${pageStart},${pageSize}
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="timeByExample"
+		parameterType="model.User.ExpenceExample"
+		resultMap="BaseResultMap">
+		select *
+		from expence where date_sub(curdate(), interval 7 day) <![CDATA[ <= ]]>
+		date(buy_time)
+		<if test="_parameter!=null">
+			<include refid="Example_Where_Clause"></include>
+		</if>
+		<if test="pageStart>=0">
+			limit ${pageStart},${pageSize}
+		</if>
+		<if test="orderByClause">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="timetwoByExample"
+		parameterType="model.User.ExpenceExample"
+		resultMap="BaseResultMap">
+		select *
+		from expence where date_sub(curdate(), interval 30 day) <![CDATA[ <= ]]>
+		date(buy_time)
+		<if test="_parameter!=null">
+			<include refid="Example_Where_Clause"></include>
+		</if>
+		<if test="pageStart>=0">
+			limit ${pageStart},${pageSize}
+		</if>
+		<if test="orderByClause">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="timethreeByExample"
+		parameterType="model.User.ExpenceExample"
+		resultMap="BaseResultMap">
+		select *
+		from expence where date_sub(curdate(), interval 0 day) = date(buy_time)
+		<if test="_parameter!=null">
+			<include refid="Example_Where_Clause"></include>
+		</if>
+
+		<if test="pageStart>=0">
+			limit ${pageStart},${pageSize}
+		</if>
+		<if test="orderByClause">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="sumPrice" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		SELECT SUM(price) FROM expence
+		<if test="time>=0">
+			WHERE DATE_SUB(CURDATE(), INTERVAL #{time} DAY) <![CDATA[ <= ]]>
+			DATE(buy_time)
+		</if>
+	</select>
+	<select id="sumPrice1" resultType="java.lang.Integer">
+		SELECT SUM(price) FROM expence
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from expence
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		expence
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="model.User.ExpenceExample">
+		delete from expence
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="model.User.Expence">
+		insert into expence (id, name, buy_time,
+		business_no,
+		price, pay_type,
+		order_info)
+		values (#{id,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{buyTime,jdbcType=DATE},
+		#{businessNo,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER},
+		#{payType,jdbcType=VARCHAR},
+		#{orderInfo,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="model.User.Expence">
+		insert into expence
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="buyTime != null">
+				buy_time,
+			</if>
+			<if test="businessNo != null">
+				business_no,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="orderInfo != null">
+				order_info,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="buyTime != null">
+				#{buyTime,jdbcType=DATE},
+			</if>
+			<if test="businessNo != null">
+				#{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="orderInfo != null">
+				#{orderInfo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="model.User.ExpenceExample"
+		resultType="java.lang.Long">
+		select count(*) from expence
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update expence
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.buyTime != null">
+				buy_time = #{record.buyTime,jdbcType=DATE},
+			</if>
+			<if test="record.businessNo != null">
+				business_no = #{record.businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.price != null">
+				price = #{record.price,jdbcType=INTEGER},
+			</if>
+			<if test="record.payType != null">
+				pay_type = #{record.payType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderInfo != null">
+				order_info = #{record.orderInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update expence
+		set id = #{record.id,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		buy_time =
+		#{record.buyTime,jdbcType=DATE},
+		business_no =
+		#{record.businessNo,jdbcType=VARCHAR},
+		price =
+		#{record.price,jdbcType=INTEGER},
+		pay_type =
+		#{record.payType,jdbcType=VARCHAR},
+		order_info =
+		#{record.orderInfo,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="model.User.Expence">
+		update expence
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="buyTime != null">
+				buy_time = #{buyTime,jdbcType=DATE},
+			</if>
+			<if test="businessNo != null">
+				business_no = #{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="orderInfo != null">
+				order_info = #{orderInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="model.User.Expence">
+		update expence
+		set name = #{name,jdbcType=VARCHAR},
+		buy_time = #{buyTime,jdbcType=DATE},
+		business_no =
+		#{businessNo,jdbcType=VARCHAR},
+		price = #{price,jdbcType=INTEGER},
+		pay_type = #{payType,jdbcType=VARCHAR},
+		order_info =
+		#{orderInfo,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>
